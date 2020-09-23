@@ -1,23 +1,27 @@
 package com.lvbing.addressselector;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.smarttop.library.bean.AdressBean;
-import com.smarttop.library.bean.City;
-import com.smarttop.library.bean.County;
-import com.smarttop.library.bean.Province;
-import com.smarttop.library.bean.Street;
-import com.smarttop.library.db.manager.AddressDictManager;
-import com.smarttop.library.utils.LogUtil;
-import com.smarttop.library.widget.AddressSelector;
-import com.smarttop.library.widget.BottomDialog;
-import com.smarttop.library.widget.OnAddressSelectedListener;
+import com.lvbing.mylibrary.bean.City;
+import com.lvbing.mylibrary.bean.County;
+import com.lvbing.mylibrary.bean.Province;
+import com.lvbing.mylibrary.bean.Street;
+import com.lvbing.mylibrary.beannew.CommonAddressBean;
+import com.lvbing.mylibrary.db.manager.AddressDictManager;
+import com.lvbing.mylibrary.utils.LogUtil;
+import com.lvbing.mylibrary.widget.AddressPickerDialogFragment;
+import com.lvbing.mylibrary.widget.AddressSelector;
+import com.lvbing.mylibrary.widget.BottomDialog;
+import com.lvbing.mylibrary.widget.OnAddressSelectedListener;
 
-public class MainActivity extends Activity implements View.OnClickListener, OnAddressSelectedListener, AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener {
+import androidx.appcompat.app.AppCompatActivity;
+
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, OnAddressSelectedListener, AddressSelector.OnDialogCloseListener, AddressSelector.onSelectorAreaPositionListener {
     private TextView tv_selector_area;
     private BottomDialog dialog;
     private String provinceCode;
@@ -53,11 +57,6 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
 
 //        //获取数据库管理
         AddressDictManager addressDictManager = selector.getAddressDictManager();
-        AdressBean.ChangeRecordsBean changeRecordsBean = new AdressBean.ChangeRecordsBean();
-        changeRecordsBean.parentId = 0;
-        changeRecordsBean.name = "测试省";
-        changeRecordsBean.id = 35;
-        addressDictManager.inserddress(changeRecordsBean);//对数据库里增加一个数据
         selector.setOnAddressSelectedListener(new OnAddressSelectedListener() {
             @Override
             public void onAddressSelected(Province province, City city, County county, Street street) {
@@ -71,7 +70,15 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
 
     @Override
     public void onClick(View view) {
-        if (dialog != null) {
+        AddressPickerDialogFragment dialogFragment = new AddressPickerDialogFragment();
+        dialogFragment.show(getSupportFragmentManager(),"ADDRESS_PICK");
+        dialogFragment.setOnAddressSure(new AddressPickerDialogFragment.OnAddressListener() {
+            @Override
+            public void onSureClick(CommonAddressBean province, CommonAddressBean city, CommonAddressBean country, CommonAddressBean street) {
+                Toast.makeText(MainActivity.this,province.getName(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        /*if (dialog != null) {
             dialog.show();
         } else {
             dialog = new BottomDialog(this);
@@ -84,7 +91,7 @@ public class MainActivity extends Activity implements View.OnClickListener, OnAd
 //            dialog.setDisplaySelectorArea("31",1,"2704",1,"2711",0,"15582",1);//设置已选中的地区
             dialog.setSelectorAreaPositionListener(this);
             dialog.show();
-        }
+        }*/
     }
 
     @Override

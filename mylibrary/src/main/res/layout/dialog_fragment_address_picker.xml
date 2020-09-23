@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="360dp"
+    android:background="@drawable/top_yuanjiao_white">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/address_closeId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="16dp"
+        android:src="@drawable/address_close_icon"
+        android:layout_gravity="right"/>
+    <com.lvbing.mylibrary.widget.AddressPickerView
+        android:id="@+id/address_pickerviewId"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

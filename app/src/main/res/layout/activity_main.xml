@@ -17,6 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
+        <com.lvbing.mylibrary.widget.AddressPickerView
+            android:id="@+id/apvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
     </LinearLayout>
 </LinearLayout>
